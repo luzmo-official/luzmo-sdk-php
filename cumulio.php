@@ -1,5 +1,6 @@
 <?php
 class Cumulio {
+  private $app = 'https://app.cumul.io';
   private $host = 'https://api.cumul.io';
   private $port = '443';
   private $apiVersion = '0.1.0';
@@ -73,13 +74,18 @@ class Cumulio {
     ));    
   }
 
+  public function iframe($dashboardId, $authorization) {
+    return $this->app . '/s/' . $dashboardId . '?key=' . $authorization['id'] . '&token=' . $authorization['token'];
+  }
+
   public function _emit($resource, $action, $query) {
     $url = $this->host . ':' . $this->port . '/' . $this->apiVersion . '/' . $resource;
 
-    $query['uid'] = $this->apiKey;
+    $query['key'] = $this->apiKey;
     $query['token'] = $this->apiToken;
     $query['version'] = $this->apiVersion;
     $payload = json_encode($query);
+    var_dump($payload);
 
     $curl = curl_init();
     $curl_options = array(
