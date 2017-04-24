@@ -9,4 +9,4 @@ See the `example-embedding.php` file to see an example of how to use the API to 
 
 ## Documentation
 
-The API documentation (available services and methods) can be found [here](http://docs.cumul.io).
+The API documentation (available services and methods) can be found [here](http://documentation.cumul.io/apidocs.html).

@@ -68,10 +68,7 @@ class Cumulio {
   }
 
   public function query($filter) {
-    return $this->_emit('data', 'SEARCH', array(
-      'action'       => 'get',
-      'filter'       => $filter
-    ));    
+    return $this->get('data', $filter);    
   }
 
   public function iframe($dashboardId, $authorization) {
@@ -85,7 +82,6 @@ class Cumulio {
     $query['token'] = $this->apiToken;
     $query['version'] = $this->apiVersion;
     $payload = json_encode($query);
-    var_dump($payload);
 
     $curl = curl_init();
     $curl_options = array(
