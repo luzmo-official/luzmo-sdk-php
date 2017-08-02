@@ -27,9 +27,6 @@ $authorization = $client->create('authorization', array(
   'locale_id' => 'en',
   'screenmode' => 'desktop'
 ));
-
-// Generate the embedding url
-$url = $client->iframe($dashboardId, $authorization);
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +39,20 @@ $url = $client->iframe($dashboardId, $authorization);
     <div style="margin-left: 28px; width: 650px;">
       <h1 style="font-weight: 200;">Cumul.io embedding example</h1>
       <p>This page contains an example of an embedded dashboard of Cumul.io. The dashboard data is securely filtered server-side, so clients can only access data to which your application explicitly grants access (in this case, the "Damflex" product).</p>
+      <p>Try to resize your page to see the dashboard adapting to different screen modes.</p>
     </div>
-    <iframe src="<?php echo $url; ?>" style="border: 0; width: 1024px; height: 650px;"></iframe>
+    <div id="myDashboard"></div>
+    <script type="text/javascript">
+      (function(d, a, s, h, b, oa, rd) { 
+        if (!d[b]) {oa = a.createElement(s), oa.async = 1; oa.src = h; rd = a.getElementsByTagName(s)[0]; rd.parentNode.insertBefore(oa, rd);}
+        d[b] = d[b] || {}; d[b].addDashboard = d[b].addDashboard || function(v) { (d[b].list = d[b].list || []).push(v) };
+      })(window, document, 'script', 'https://cdn-a.cumul.io/js/embed.min.js', 'Cumulio');
+      Cumulio.addDashboard({
+        dashboardId: '<?php echo $dashboardId; ?>'
+        , container: '#myDashboard'
+        , key: '<?php echo $authorization['id']; ?>'
+        , token: '<?php echo $authorization['token']; ?>'
+      });
+    </script>
   </body>
 </html>
