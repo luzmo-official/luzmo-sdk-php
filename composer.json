@@ -1,0 +1,20 @@
+{
+  "name": "cumulio/cumul.io-sdk-php",
+  "type": "library",
+  "description": "PHP SDK to interact with the Cumul.io API in order to create, modify or delete datasets, dashboards or push new data into the platform in a programmatic way.",
+  "keywords": ["cumul.io","data visualization","dashboard"],
+  "homepage": "https://github.com/cumulio/cumul.io-sdk-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Cumul.io Team",
+      "email": "support@cumul.io",
+      "homepage": "https://cumul.io"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2",
+    "ext-curl": "*",
+    "ext-json": "*"
+  }
+}
