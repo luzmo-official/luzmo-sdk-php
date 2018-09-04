@@ -1,5 +1,5 @@
 <?php
-include('cumulio.php');
+include('Cumulio.php');
 
 // Setup connection
 $client = Cumulio::initialize(
