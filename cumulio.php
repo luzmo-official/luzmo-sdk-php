@@ -1,4 +1,7 @@
 <?php
+
+namespace Cumulio;
+
 class Cumulio {
   private $app = 'https://app.cumul.io';
   private $host = 'https://api.cumul.io';
