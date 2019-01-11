@@ -1,5 +1,6 @@
 <?php
-include('Cumulio.php');
+require 'vendor/autoload.php';
+use Cumulio\Cumulio;
 
 // Setup connection
 $client = Cumulio::initialize(

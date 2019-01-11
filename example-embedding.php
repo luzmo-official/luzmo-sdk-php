@@ -1,5 +1,6 @@
 <?php
-include('Cumulio.php');
+require 'vendor/autoload.php';
+use Cumulio\Cumulio;
 
 // Connect to Cumul.io API
 $client = Cumulio::initialize('< Your API key >', '< Your API token >');
