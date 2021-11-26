@@ -5,7 +5,7 @@ use Cumulio\Cumulio;
 
 // Connect to Cumul.io API
 $client = Cumulio::initialize('< Your API key >', '< Your API token >'); // Fill in your API key & token
-// Set third, optional property to https://app.cumul.io/ (default, EU multitenant env), https://app.us.cumul.io (US multitenant env) or your specific VPC address
+// Set third, optional property to https://api.cumul.io/ (default, EU multitenant env), https://api.us.cumul.io (US multitenant env) or your specific VPC address
 
 // On page requests of pages containing embedded dashboards, request an "authorization"
 $integrationId = 'b9a0c66e-2986-4b0f-913f-af54d9132453'; // Fill in your integration ID
