@@ -3,8 +3,7 @@
 namespace Cumulio;
 
 class Cumulio {
-  private $app = 'https://app.cumul.io';
-  private $host = 'https://api.cumul.io';
+  private $host;
   private $port = '443';
   private $apiVersion = '0.1.0';
   private $apiKey;
@@ -14,10 +13,11 @@ class Cumulio {
   public function __construct() {
   }
 
-  public static function initialize($apiKey, $apiToken, $format = 'array') {
+  public static function initialize($apiKey, $apiToken, $host = 'https://api.cumul.io', $format = 'array') {
     $instance = new self();
     $instance->apiKey = $apiKey;
     $instance->apiToken = $apiToken;
+    $instance->host = $host ? $host : 'https://api.cumul.io';
     $instance->format = ($format === 'object' || $format === 'array') ? $format : 'array';
     return $instance;
   }
@@ -72,10 +72,6 @@ class Cumulio {
 
   public function query($filter) {
     return $this->get('data', $filter);    
-  }
-
-  public function iframe($dashboardId, $authorization) {
-    return $this->app . '/s/' . $dashboardId . '?key=' . $authorization['id'] . '&token=' . $authorization['token'];
   }
 
   public function _emit($resource, $action, $query) {

@@ -7,6 +7,8 @@ $client = Cumulio::initialize(
   '< Your API key >',
   '< Your API token >'
 );
+// Fill in your API key & token
+// Set third, optional property to https://app.cumul.io/ (default, EU multitenant env), https://app.us.cumul.io (US multitenant env) or your specific VPC address
 
 
 // Example 1: create a new dataset

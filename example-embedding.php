@@ -1,34 +1,32 @@
 <?php
+// This code should be executed server-side. Your API key and token should be kept confidential.
 require 'vendor/autoload.php';
 use Cumulio\Cumulio;
 
 // Connect to Cumul.io API
-$client = Cumulio::initialize('< Your API key >', '< Your API token >');
+$client = Cumulio::initialize('< Your API key >', '< Your API token >'); // Fill in your API key & token
+// Set third, optional property to https://app.cumul.io/ (default, EU multitenant env), https://app.us.cumul.io (US multitenant env) or your specific VPC address
 
 // On page requests of pages containing embedded dashboards, request an "authorization"
-$dashboardId = '1d5db81a-3f88-4c17-bb4c-d796b2093dac';
-$time = new DateTime();
+$integrationId = 'b9a0c66e-2986-4b0f-913f-af54d9132453'; // Fill in your integration ID
 $authorization = $client->create('authorization', array(
-  'type' => 'temporary',
-  // User restrictions
-  'expiry' => $time->modify('+5 minutes')->format('c'),
-  // Data & dashboard restrictions
-  'securables' => array('4db23218-1bd5-44f9-bd2a-7e6051d69166', 'f335be80-b571-40a1-9eff-f642a135b826', $dashboardId),
-  'filters' => array(
-    array(
-      'clause'       => 'where',
-      'origin'       => 'global',
-      'securable_id' => '4db23218-1bd5-44f9-bd2a-7e6051d69166',
-      'column_id'    => '3e2b2a5d-9221-4a70-bf26-dfb85be868b8',
-      'expression'   => '? = ?',
-      'value'        => 'Damflex'
-    )
-  ),
-  // Presentation options
-  'locale_id' => 'en',
-  'screenmode' => 'desktop'
+  'type' => 'sso',
+  'integration_id' => $integrationId,
+  'expiry' => '24 hours',
+  'inactivity_interval' => '10 minutes',
+  // user information
+  'username' => '12345678', // unique, immutable username
+  'name' => 'John Doe',
+  'email' => 'johndoe@burritosnyc.com',
+  'suborganization' => 'Burritos NYC',
+  'role' => 'viewer',
+  // data restrictions 
+  'metadata' => array(
+    'client_id' => 1234 // specify your parameter names and values
+  )
 ));
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -36,24 +34,30 @@ $authorization = $client->create('authorization', array(
     <meta charset="UTF-8">
     <title>Cumul.io embedding example</title>
   </head>
-  <body>
-    <div style="margin-left: 28px; width: 650px;">
+  <body style="font-family: sans-serif;">
+    <div style="margin-left: 28px">
       <h1 style="font-weight: 200;">Cumul.io embedding example</h1>
-      <p>This page contains an example of an embedded dashboard of Cumul.io. The dashboard data is securely filtered server-side, so clients can only access data to which your application explicitly grants access (in this case, the "Damflex" product).</p>
+      <p>This page contains an example of an embedded dashboard of Cumul.io. The dashboard data is securely filtered server-side, so clients can only access data to which your application explicitly grants access (in this case, the data of client_id = 1234).</p>
       <p>Try to resize your page to see the dashboard adapting to different screen modes.</p>
     </div>
-    <div id="myDashboard"></div>
+    <cumulio-dashboard
+        appServer="https://app.cumul.io/"> 
+        <!-- Set appServer to https://app.cumul.io/ (default, EU multitenant env), https://app.us.cumul.io (US multitenant env) or your specific VPC address -->
+    </cumulio-dashboard>
+    <!-- Check out the latest version on our npm page, as well as our components for frameworks such as react, vue and angular -->
+    <script src="https://cdn-a.cumul.io/js/cumulio-dashboard/1.0.7/cumulio-dashboard.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-      (function(d, a, s, h, b, oa, rd) { 
-        if (!d[b]) {oa = a.createElement(s), oa.async = 1; oa.src = h; rd = a.getElementsByTagName(s)[0]; rd.parentNode.insertBefore(oa, rd);}
-        d[b] = d[b] || {}; d[b].addDashboard = d[b].addDashboard || function(v) { (d[b].list = d[b].list || []).push(v) };
-      })(window, document, 'script', 'https://cdn-a.cumul.io/js/embed.min.js', 'Cumulio');
-      Cumulio.addDashboard({
-        dashboardId: '<?php echo $dashboardId; ?>'
-        , container: '#myDashboard'
-        , key: '<?php echo $authorization['id']; ?>'
-        , token: '<?php echo $authorization['token']; ?>'
-      });
+      const dashboardElement = document.querySelector('cumulio-dashboard');
+      // We can now set the key and token to the dashboard component.
+      dashboardElement.authKey = '<?php echo $authorization['id']; ?>'
+      dashboardElement.authToken ='<?php echo $authorization['token']; ?>'
+      // retrieve the accessible dashboards from the Integration
+      dashboardElement.getAccessibleDashboards()
+        .then(dashboards => {
+          if (dashboards.length > 0) {
+          dashboardElement.dashboardId = dashboards[0].id;
+          };
+        });
     </script>
   </body>
 </html>
