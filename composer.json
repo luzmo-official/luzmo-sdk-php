@@ -2,12 +2,12 @@
   "name": "luzmo/luzmo-sdk-php",
   "description": "PHP SDK to interact with the Luzmo API in order to create, modify or delete datasets, dashboards or push new data into the platform in a programmatic way.",
   "keywords": ["luzmo.com", "luzmo","data visualization","dashboard"],
-  "homepage": "https://github.com/luzmo/luzmo-sdk-php",
+  "homepage": "https://github.com/luzmo-official/luzmo-sdk-php",
   "license": "MIT",
   "authors": [
     {
       "name": "Luzmo Team",
-      "email": "support@luzmo.com",
+      "email": "engineering@luzmo.com",
       "homepage": "https://luzmo.com"
     }
   ],
