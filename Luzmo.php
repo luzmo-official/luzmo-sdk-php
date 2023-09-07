@@ -1,8 +1,8 @@
 <?php
 
-namespace Cumulio;
+namespace Luzmo;
 
-class Cumulio {
+class Luzmo {
   private $host;
   private $port = '443';
   private $apiVersion = '0.1.0';
@@ -13,11 +13,11 @@ class Cumulio {
   public function __construct() {
   }
 
-  public static function initialize($apiKey, $apiToken, $host = 'https://api.cumul.io', $format = 'array') {
+  public static function initialize($apiKey, $apiToken, $host = 'https://api.luzmo.com', $format = 'array') {
     $instance = new self();
     $instance->apiKey = $apiKey;
     $instance->apiToken = $apiToken;
-    $instance->host = $host ? $host : 'https://api.cumul.io';
+    $instance->host = $host ? $host : 'https://api.luzmo.com';
     $instance->format = ($format === 'object' || $format === 'array') ? $format : 'array';
     return $instance;
   }
