@@ -7,22 +7,27 @@ use Luzmo\Luzmo;
 $client = Luzmo::initialize('< Your API key >', '< Your API token >'); // Fill in your API key & token
 // Set third, optional property to https://api.luzmo.com/ (default, EU multitenant env), https://api.us.luzmo.com (US multitenant env) or your specific VPC address
 
-// On page requests of pages containing embedded dashboards, request an "authorization"
-$integrationId = 'b9a0c66e-2986-4b0f-913f-af54d9132453'; // Fill in your integration ID
+// On page requests of pages containing embedded dashboards, request an "Authorization"
 $authorization = $client->create('authorization', array(
-  'type' => 'sso',
-  'integration_id' => $integrationId,
-  'expiry' => '24 hours',
-  'inactivity_interval' => '10 minutes',
-  // user information
-  'username' => '12345678', // unique, immutable username
-  'name' => 'John Doe',
-  'email' => 'johndoe@burritosnyc.com',
-  'suborganization' => 'Burritos NYC',
-  'role' => 'viewer',
-  // data restrictions 
-  'metadata' => array(
-    'client_id' => 1234 // specify your parameter names and values
+  'type' => 'embed',
+  // End-user information
+  'username' => '12345678',             // unique, immutable username for your end-user
+  'name' => 'John Doe',                 // Name of your enduser
+  'email' => 'johndoe@burritosnyc.com', // Email address of your enduser
+  'suborganization' => 'Burritos NYC',  // Suborganization/tenancy of your end-user
+  'role' => 'viewer',                   // role of your end-user
+  // Data restrictions 
+  'parameter_overrides' => array(
+    'client_id' => 1234                 // Specify your parameter names and values
+  ),
+  // End-user dashboards & datasets access
+  'access' => array(
+    'collections' => array(
+      array(
+        'id' => '<a collection id>',    // Fill in a collection ID
+        'inheritRights' => 'use'
+      )
+    )
   )
 ));
 ?>
