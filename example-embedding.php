@@ -46,11 +46,13 @@ $authorization = $client->create('authorization', array(
       <p>Try to resize your page to see the dashboard adapting to different screen modes.</p>
     </div>
     <luzmo-dashboard
-        appServer="https://app.luzmo.com/"> 
+        appServer="https://app.luzmo.com/"
+        apiHost="https://api.luzmo.com">
         <!-- Set appServer to https://app.luzmo.com/ (default, EU multitenant env), https://app.us.luzmo.com (US multitenant env) or your specific VPC address -->
+        <!-- Set apiHost to https://api.luzmo.com/ (default, EU multitenant env), https://api.us.luzmo.com (US multitenant env) or your specific VPC API address -->
     </luzmo-dashboard>
     <!-- Check out the latest version on our npm page, as well as our components for frameworks such as react, vue and angular -->
-    <script src="https://cdn.luzmo.com/js/luzmo-embed/5.0.0/luzmo-embed.min.js" charset="utf-8"></script>
+    <script src="https://cdn.luzmo.com/js/luzmo-embed/5.0.7/luzmo-embed.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       const dashboardElement = document.querySelector('luzmo-dashboard');
       // We can now set the key and token to the dashboard component.
@@ -60,7 +62,7 @@ $authorization = $client->create('authorization', array(
       dashboardElement.getAccessibleDashboards()
         .then(dashboards => {
           if (dashboards.length > 0) {
-          dashboardElement.dashboardId = dashboards[0].id;
+            dashboardElement.dashboardId = dashboards[0].id;
           };
         });
     </script>
