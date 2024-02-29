@@ -94,7 +94,18 @@ class Luzmo {
       CURLOPT_POSTFIELDS     => $payload
     );
     curl_setopt_array($curl, $curl_options);
-    return json_decode(curl_exec($curl), $this->format === 'array' ? true : false);
+    $response = curl_exec($curl);
+    $content_type = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
+    
+    // Check content type and handle accordingly
+    if (strpos($content_type, 'application/json') !== false) {
+      // JSON response from Luzmo API -> decode
+      return json_decode($response, $this->format === 'array');
+    }
+    else {
+      // Non-JSON response (e.g. image or PDF export) -> return as such
+      return $response;
+    }
   }
 
 }
