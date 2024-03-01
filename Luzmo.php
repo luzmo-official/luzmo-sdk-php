@@ -98,13 +98,13 @@ class Luzmo {
     $content_type = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
     
     // Check content type and handle accordingly
-    if (strpos($content_type, 'application/json') !== false) {
-      // JSON response from Luzmo API -> decode
-      return json_decode($response, $this->format === 'array');
-    }
-    else {
+    if (strpos($content_type, 'application/json') === false) {
       // Non-JSON response (e.g. image or PDF export) -> return as such
       return $response;
+    }
+    else {
+      // JSON response from Luzmo API -> decode
+      return json_decode($response, $this->format === 'array');
     }
   }
 
